@@ -30,7 +30,6 @@ class EmailVerification(models.Model):
                   from_email=settings.EMAIL_HOST_USER,
                   recipient_list=[self.user.email],
                   fail_silently=False)
-        print(f"Verification email sent to {self.user.email} with link: {verification_link}")
 
     def is_expired(self):
         return True if now() >= self.expiration else False

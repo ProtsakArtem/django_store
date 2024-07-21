@@ -21,7 +21,7 @@ class ProductView(TitleMixin, ListView):
     title = "Store - Каталог"
 
     def get_queryset(self):
-        queryset = super(ProductView, self).get_queryset()
+        queryset = super(ProductView, self).get_queryset().order_by('id')
         category_id = self.kwargs.get('category_id')
         return queryset.filter(category_name=category_id) if category_id else queryset
 

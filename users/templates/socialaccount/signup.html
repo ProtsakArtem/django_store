@@ -1,0 +1,13 @@
+{% extends 'socialaccount/base_entrance.html' %}
+{% load static %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'vendor/css/git.css' %}">
+{% endblock extra_head %}
+{% block content %}
+<h1>Sign Up</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign up</button>
+</form>
+{% endblock %}

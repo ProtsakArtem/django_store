@@ -55,8 +55,6 @@ class WayForPay:
             string.encode('utf-8'),
             hashlib.md5
         ).hexdigest()
-        print("hash:")
-        print(hash_result)
         return hash_result
 
     def create_invoice(self, merchantAccount, merchantAuthType, amount, currency, service_url, *args, **kwargs):
@@ -72,7 +70,6 @@ class WayForPay:
         string += ';'.join(productNames) + ';'
         string += ';'.join(map(str, productCounts)) + ';'
         string += ';'.join(map(str, productPrices))
-        print(string)
 
         params = {
             "transactionType": "CREATE_INVOICE",
@@ -91,7 +88,6 @@ class WayForPay:
             "productCount": productCounts,
             'serviceUrl': service_url,
         }
-        print(params['serviceUrl'])
         try:
             result = requests.post(url=API_URL, json=params)
             response_dict = json.loads(result.text)
@@ -103,13 +99,9 @@ class WayForPay:
                 qr_code = response_dict.get("qrCode", None)
                 return InvoiceCreateResult(invoice_url, reason, reason_code, qr_code, orderReference)
             else:
-                print(f'Error: {response_dict}')
-                if 'error' in response_dict:
-                    print(f'Error detail: {response_dict["error"]}')
                 return None
 
         except Exception as e:
-            print(f'Error: {e}')
             return None
 
     def check_invoice(self, merchantAccount, orderReference):
@@ -152,7 +144,6 @@ class WayForPay:
                 return InvoiceStatusResult(response_dict, reason, reasonCode, orderReference, amount, currency, authCode, createdDate, processingDate, cardPan, cardType, issuerBankCountry, issuerBankName, transactionStatus, refundAmount, settlementDate, settlementAmount, fee, merchantSignature)
 
         except Exception as e:
-            print(f'Error: {e}')
             return None
 
     def delete_invoice(self, merchantAccount, orderReference):
@@ -173,5 +164,4 @@ class WayForPay:
                 return True
 
         except Exception as e:
-            print(f'Error: {e}')
             return None

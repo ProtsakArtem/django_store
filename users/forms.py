@@ -29,9 +29,7 @@ class UserRegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super(UserRegisterForm, self).save(commit=True)
-        print(f"User saved: {user.id}")
         send_email_verification.delay(user.id)
-        print('After send_email_verification')
         return user
 
 
