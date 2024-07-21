@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Store</title>
+    <title>{{ title }}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -45,9 +45,9 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li>
-                            <a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a>
+                            <a class="dropdown-item" href="{% url 'users:profile' user.id %}">Профиль</a>
                         </li>
-                        <li><a class="dropdown-item" href="123">Заказы</a></li>
+                        <li><a class="dropdown-item" href="{% url 'orders:order_create' %}">Заказы</a></li>
                         {% if user.is_superuser or user.is_staff%}
                         	<li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>
                         {% endif %} 
@@ -56,10 +56,14 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{% url 'users:logout' %}">
+                            <form id="logoutForm" method="post" action="{% url 'users:logout' %}" style="display: none;">
+                                {% csrf_token %}
+                            </form>
+                            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
                                 Выйти
                             </a>
-                        </li>
+</li>
+
                     </ul>
                 </li>
                 {% else %}

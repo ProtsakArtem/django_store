@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from users.models import User
 from django import forms
-
+from users.tasks import send_email_verification
 
 class UserDataForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': "form-control py-4", 'placeholder': "Введите имя пользователя"}))
@@ -26,6 +26,14 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("first_name", "last_name", "username", "email", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super(UserRegisterForm, self).save(commit=True)
+        print(f"User saved: {user.id}")
+        send_email_verification.delay(user.id)
+        print('After send_email_verification')
+        return user
+
 
 class UserProfileForm(UserChangeForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class': "form-control py-4"}))
