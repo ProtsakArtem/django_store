@@ -1,9 +1,6 @@
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LogoutView
 from django.urls import path
-
-from orders.views import OrderCreateView, SuccessTemplateView, CancelTemplateView, payment_return
-from users.views import RegisterView, ProfileView, LoginFormView, EmailVerificationView
+from orders.views import OrderCreateView, SuccessTemplateView, CancelTemplateView, payment_return, OrderListView, \
+    OrderDetailView
 
 app_name = 'orders'
 
@@ -12,4 +9,6 @@ urlpatterns = [
     path('order-success/', SuccessTemplateView.as_view(), name='order_success'),
     path('order-canceled/', CancelTemplateView.as_view(), name='order_canceled'),
     path('payment-return/', payment_return, name='payment_return'),
+    path('', OrderListView.as_view(), name='orders_list'),
+    path('order/<int:pk>', OrderDetailView.as_view(), name='order'),
 ]

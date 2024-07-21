@@ -3,9 +3,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseForbidden
 from django.shortcuts import HttpResponseRedirect
 from django.views.generic import CreateView, UpdateView, TemplateView
-
 from common.views import TitleMixin
-from products.models import Cart, Product
 from users.forms import UserRegisterForm, UserProfileForm
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse

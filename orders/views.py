@@ -1,19 +1,11 @@
-import hashlib
 from datetime import datetime
-from decimal import Decimal
 import logging
-
 from django.shortcuts import redirect, render
-
 from orders.models import Order
 from orders.tasks import check_invoice_status
-from django.http import JsonResponse, HttpResponseRedirect
-from django.views.decorators.csrf import csrf_exempt
-from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, TemplateView
-import json
-import hmac
-from learn_django_main.settings import merchantAccount
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views.generic import CreateView, TemplateView, ListView, DetailView
 from orders.forms import OrderForm
 from common.views import TitleMixin
 from django.conf import settings
@@ -28,6 +20,26 @@ class SuccessTemplateView(TitleMixin, TemplateView):
 class CancelTemplateView(TitleMixin, TemplateView):
     template_name = 'orders/canceled.html'
     title = "Store - Замовлення відмінено"
+
+
+class OrderListView(TitleMixin, ListView):
+    template_name = 'orders/orders.html'
+    title = "Store - Мої замовлення"
+    queryset = Order.objects.all()
+    ordering = ('-created')
+
+    def get_queryset(self):
+        queryset = super(OrderListView, self).get_queryset()
+        return queryset.filter(initiator=self.request.user)
+
+
+class OrderDetailView(DetailView):
+    template_name = 'orders/order.html'
+    model = Order
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f"Store - заказ #{self.object.id}"
+        return context
 
 
 class OrderCreateView(TitleMixin, CreateView):
@@ -61,7 +73,6 @@ class OrderCreateView(TitleMixin, CreateView):
                 service_url=f"{settings.DOMAIN_NAME}{reverse('orders:payment_return')}",
             )
             if hasattr(result, 'invoiceUrl'):
-                # Запускаємо таск для перевірки статусу інвойсу
                 check_invoice_status.apply_async((result.orderReference, order.id, datetime.now().isoformat()))
 
                 return redirect(result.invoiceUrl)
@@ -70,14 +81,7 @@ class OrderCreateView(TitleMixin, CreateView):
                 return self.form_invalid(form)
 
 
-
-def fulfill_order(session):
-    order_id = int(session.metadata.order_id)
-    order = Order.objects.get(id=order_id)
-    order.update_after_payment()
-
 def payment_return(request):
-    # Ваша логіка для перевірки підпису та даних від WayForPay
     logger.info("Повернення від WayForPay отримано")
     logger.info(f"Дані запиту: {request.GET}")
 
@@ -85,7 +89,7 @@ def payment_return(request):
     if order_id:
         order = Order.objects.filter(id=order_id).first()
         if order:
-            order.status = Order.PAID  # Змінюємо статус на Оплачено
+            order.status = Order.PAID
             order.save()
             return render(request, 'orders/success.html', {'order': order})
-    return HttpResponseRedirect('/error/')  # Направляємо на сторінку з помилкою, якщо щось не так
+    return HttpResponseRedirect('/error/')

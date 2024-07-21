@@ -17,7 +17,12 @@ def check_invoice_status(self, order_reference, order_id, created_time):
         order = Order.objects.get(pk=order_id)
         order.status = Order.PAID
         order.save()
+        fulfill_order(order)
         return True
-    elif datetime.now() < (created_time + timedelta(hours=3)):  # Перевірка, що минуло не більше 3 годин
-        raise self.retry(countdown=60)  # Повторний запуск задачі через 1 хвилину
+    elif datetime.now() < (created_time + timedelta(hours=3)):
+        raise self.retry(countdown=60)
     return False
+
+
+def fulfill_order(order):
+    order.update_after_payment()
