@@ -45,11 +45,11 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li>
-                            <a class="dropdown-item" href="{% url 'users:profile' user.id %}">Профиль</a>
+                            <a class="dropdown-item" href="{% url 'users:profile' user.id %}">Профіль</a>
                         </li>
-                        <li><a class="dropdown-item" href="{% url 'orders:orders_list' %}">Заказы</a></li>
+                        <li><a class="dropdown-item" href="{% url 'orders:orders_list' %}">Замовлення</a></li>
                         {% if user.is_superuser or user.is_staff%}
-                        	<li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>
+                        	<li><a class="dropdown-item" href="{% url 'admin:index' %}">Адмін-панель</a></li>
                         {% endif %} 
                         
                         <li>
@@ -60,7 +60,7 @@
                                 {% csrf_token %}
                             </form>
                             <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
-                                Выйти
+                                Вихід
                             </a>
 </li>
 
@@ -68,7 +68,7 @@
                 </li>
                 {% else %}
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:login' %}">Войти <i class="fas fa-sign-in-alt"></i></a>
+                    <a class="nav-link" href="{% url 'users:login' %}">Вхід <i class="fas fa-sign-in-alt"></i></a>
                 </li>
                 {% endif %} 
 

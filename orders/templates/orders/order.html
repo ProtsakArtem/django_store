@@ -9,10 +9,10 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Название</th>
-                        <th scope="col">Кол-во</th>
-                        <th scope="col">Цена</th>
-                        <th scope="col">Сумма</th>
+                        <th scope="col">Назва</th>
+                        <th scope="col">Кількість</th>
+                        <th scope="col">Ціна</th>
+                        <th scope="col">Сума</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -28,7 +28,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                <p class="float-right h4 mt-3">Итого {{ object.basket_history.total_sum|intcomma }} грн.</p>
+                <p class="float-right h4 mt-3">Разом {{ object.basket_history.total_sum|intcomma }} грн.</p>
             </div>
         </div>
     </div>

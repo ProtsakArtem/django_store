@@ -18,7 +18,7 @@
                         {% endif %} 
                         
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Создать аккаунт</h3>
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Створити акаунт</h3>
                             </div>
                             <div class="card-body">
                                 <form action="{% url 'users:register' %}" method="post">
@@ -26,25 +26,24 @@
                                     <div class="form-row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="small mb-1" for="{{ form.first_name.id_for_label }}">Имя</label>
+                                                <label class="small mb-1" for="{{ form.first_name.id_for_label }}">Ім'я</label>
                                                 {{ form.first_name }}
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="small mb-1" for="{{ form.last_name.id_for_label }}">Фамилия</label>
+                                                <label class="small mb-1" for="{{ form.last_name.id_for_label }}">Прізвище</label>
                                                 {{ form.last_name }}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="{{ form.username.id_for_label }}">Имя пользователя</label>
+                                            <label class="small mb-1" for="{{ form.username.id_for_label }}">Ім'я користувача</label>
                                             {{form.username}}
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="{{ form.email.id_for_label }}">Адрес электронной
-                                                почты</label>
+                                            <label class="small mb-1" for="{{ form.email.id_for_label }}">Електронна адреса</label>
                                             {{form.email}}
                                         </div>
                                     </div>
@@ -57,19 +56,18 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="small mb-1" for="{{ form.password2.id_for_label }}">Подтверждение
-                                                    пароля</label>
+                                                <label class="small mb-1" for="{{ form.password2.id_for_label }}">Підтвердження паролю</label>
                                                 {{ form.password2 }}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group mt-4 mb-0">
-                                        <input class="btn btn-primary btn-block" type="submit" value="Создать аккаунт">
+                                        <input class="btn btn-primary btn-block" type="submit" value="Створити акаунт">
                                     </div>
                                 </form>
                             </div>
                             <div class="card-footer text-center">
-                                <div class="small"><a href="{% url 'users:login' %}">Уже есть аккаунт? Авторизоваться</a></div>
+                                <div class="small"><a href="{% url 'users:login' %}">Вже маєте акаунт? Авторизуйтесь!</a></div>
                             </div>
                         </div>
                     </div>

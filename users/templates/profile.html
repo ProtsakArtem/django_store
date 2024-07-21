@@ -30,13 +30,13 @@
                 <div class="form-row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="small mb-1" for="{{ form.first_name.id_for_label }}">Имя</label>
+                            <label class="small mb-1" for="{{ form.first_name.id_for_label }}">Ім'я</label>
                             {{ form.first_name }}
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="small mb-1" for='{{ form.last_name.id_for_label }}'>Фамилия</label>
+                            <label class="small mb-1" for='{{ form.last_name.id_for_label }}'>Прізвище</label>
                             {{ form.last_name }}
                         </div>
                     </div>
@@ -45,24 +45,24 @@
                     <div class="col-lg-12">
                         <div class="custom-file">
                             {{form.image}}
-                            <label class="custom-file-label" for="{{ form.image.id_for_label }}">Выберите изображение</label>
+                            <label class="custom-file-label" for="{{ form.image.id_for_label }}">Оберіть зображення</label>
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-lg-6">
-                        <label class="small mb-1" for="{{ form.username.id_for_label }}">Имя пользователя</label>
+                        <label class="small mb-1" for="{{ form.username.id_for_label }}">Ім'я користувача</label>
                         {{form.username}}
                     </div>
                     <div class="col-lg-6">
-                        <label class="small mb-1" for="{{ form.email.id_for_label }}">Адрес электронной
-                            почты</label>
+                        <label class="small mb-1" for="{{ form.email.id_for_label }}">
+                            Електронна пошта</label>
                         {{form.email}}
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-lg-12" style="margin-top: 33px;">
-                        <input class="btn btn-info btn-block" type="submit" value="Сохранить">
+                        <input class="btn btn-info btn-block" type="submit" value="Зберегти">
                     </div>
                 </div>
             </form>
